@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ELONMUSIKO — Private Access</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0b0a;
+      --surface: rgba(255,255,255,.065);
+      --border: rgba(255,255,255,.14);
+      --text: #f4f1eb;
+      --muted: #96938d;
+      --gold: #c8a96b;
+      --gold-light: #e1c98f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      overflow: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+    }
+
+    /* ───────── VISUAL SIDE ───────── */
+
+    .visual {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.08), rgba(0,0,0,.45)),
+        url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90")
+        center / cover no-repeat;
+    }
+
+    .visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0,0,0,.82), transparent 55%),
+        linear-gradient(to right, rgba(0,0,0,.2), transparent);
+    }
+
+    .brand {
+      position: absolute;
+      z-index: 2;
+      top: 42px;
+      left: 48px;
+      letter-spacing: .28em;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .visual-content {
+      position: absolute;
+      z-index: 2;
+      left: 48px;
+      bottom: 52px;
+      max-width: 550px;
+    }
+
+    .eyebrow {
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: .28em;
+      font-size: 10px;
+      margin-bottom: 18px;
+    }
+
+    .visual h2 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(48px, 5vw, 78px);
+      line-height: .88;
+      font-weight: 400;
+      letter-spacing: -.025em;
+    }
+
+    .visual p {
+      margin-top: 25px;
+      max-width: 390px;
+      color: rgba(255,255,255,.65);
+      font-size: 13px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ───────── LOGIN SIDE ───────── */
+
+    .login-side {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(200,169,107,.07), transparent 35%),
+        #0d0d0c;
+    }
+
+    .login {
+      width: min(100%, 390px);
+      animation: reveal .9s cubic-bezier(.2,.7,.2,1) both;
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-header {
+      margin-bottom: 42px;
+    }
+
+    .login-header .small {
+      color: var(--gold);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .25em;
+      margin-bottom: 15px;
+    }
+
+    .login-header h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 55px;
+      line-height: .95;
+      font-weight: 500;
+      letter-spacing: -.025em;
+    }
+
+    .login-header p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 17px;
+      line-height: 1.7;
+    }
+
+    /* INPUTS */
+
+    .field {
+      position: relative;
+      margin-bottom: 17px;
+    }
+
+    .field input {
+      width: 100%;
+      height: 58px;
+      padding: 22px 48px 8px 18px;
+      border: 1px solid var(--border);
+      outline: none;
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 2px;
+      font: 13px "Inter", sans-serif;
+      transition: .3s ease;
+    }
+
+    .field label {
+      position: absolute;
+      left: 18px;
+      top: 20px;
+      color: #85827d;
+      font-size: 12px;
+      pointer-events: none;
+      transition: .25s ease;
+    }
+
+    .field input:focus,
+    .field input:not(:placeholder-shown) {
+      border-color: rgba(200,169,107,.65);
+      background: rgba(255,255,255,.085);
+    }
+
+    .field input:focus + label,
+    .field input:not(:placeholder-shown) + label {
+      top: 8px;
+      font-size: 8px;
+      color: var(--gold);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 17px;
+      top: 20px;
+      border: 0;
+      background: none;
+      color: #77746f;
+      cursor: pointer;
+      font-size: 11px;
+      transition: .2s;
+    }
+
+    .toggle-password:hover {
+      color: var(--gold-light);
+    }
+
+    /* OPTIONS */
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 19px 0 26px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .remember {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .remember input {
+      appearance: none;
+      width: 13px;
+      height: 13px;
+      border: 1px solid #57544e;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .remember input:checked {
+      border-color: var(--gold);
+    }
+
+    .remember input:checked::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      left: 3px;
+      top: 3px;
+    }
+
+    .forgot {
+      color: var(--gold-light);
+      text-decoration: none;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    /* BUTTON */
+
+    .submit {
+      width: 100%;
+      height: 57px;
+      border: 1px solid var(--gold);
+      background: var(--gold);
+      color: #111;
+      cursor: pointer;
+      font: 500 10px "Inter", sans-serif;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      transition: .35s ease;
+    }
+
+    .submit::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--gold-light);
+      transform: translateX(-101%);
+      transition: .35s ease;
+    }
+
+    .submit:hover::before {
+      transform: translateX(0);
+    }
+
+    .submit span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .submit.loading span {
+      opacity: 0;
+    }
+
+    .submit.loading::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      width: 15px;
+      height: 15px;
+      border: 1px solid rgba(0,0,0,.25);
+      border-top-color: #111;
+      border-radius: 50%;
+      left: calc(50% - 8px);
+      top: calc(50% - 8px);
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* DIVIDER */
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 27px 0;
+      color: #5f5c57;
+      font-size: 9px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: rgba(255,255,255,.08);
+    }
+
+    /* GOOGLE */
+
+    .google {
+      width: 100%;
+      height: 52px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: transparent;
+      color: #d2d0ca;
+      cursor: pointer;
+      font: 400 10px "Inter", sans-serif;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: .3s;
+    }
+
+    .google:hover {
+      border-color: rgba(200,169,107,.55);
+      background: rgba(255,255,255,.035);
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 31px;
+      color: #68655f;
+      font-size: 10px;
+    }
+
+    .footer-text a {
+      color: var(--gold-light);
+      text-decoration: none;
+      margin-left: 4px;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    .security {
+      margin-top: 38px;
+      padding-top: 17px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      color: #55524d;
+      font-size: 8px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .security-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #7f9c78;
+      margin-top: 2px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 850px) {
+      body {
+        overflow: auto;
+      }
+
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      .visual {
+        min-height: 38vh;
+      }
+
+      .visual-content {
+        left: 28px;
+        bottom: 28px;
+      }
+
+      .visual h2 {
+        font-size: 48px;
+      }
+
+      .visual p {
+        display: none;
+      }
+
+      .brand {
+        left: 28px;
+        top: 28px;
+      }
+
+      .login-side {
+        min-height: 62vh;
+        padding: 45px 28px 55px;
+      }
+
+      .login-header h1 {
+        font-size: 46px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .visual {
+        min-height: 32vh;
+      }
+
+      .visual h2 {
+        font-size: 42px;
+      }
+
+      .login-side {
+        padding: 42px 22px 50px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <section class="visual">
+
+      <div class="brand">AURELIS</div>
+
+      <div class="visual-content">
+        <div class="eyebrow">Private Members' Area</div>
+
+        <h2>
+          Enter a world<br>
+          made exceptional.
+        </h2>
+
+        <p>
+          A private digital space designed for those who
+          value discretion, craftsmanship and extraordinary
+          experiences.
+        </p>
+      </div>
+
+    </section>
+
+    <section class="login-side">
+
+      <div class="login">
+
+        <div class="login-header">
+          <div class="small">Welcome back</div>
+
+          <h1>Sign in.</h1>
+
+          <p>
+            Access your private account and continue
+            where you left off.
+          </p>
+        </div>
+
+        <form id="loginForm">
+
+          <div class="field">
+            <input
+              type="email"
+              id="email"
+              placeholder=" "
+              autocomplete="email"
+              required
+            />
+            <label for="email">Email address</label>
+          </div>
+
+          <div class="field">
+            <input
+              type="password"
+              id="password"
+              placeholder=" "
+              autocomplete="current-password"
+              required
+            />
+            <label for="password">Password</label>
+
+            <button
+              type="button"
+              class="toggle-password"
+              id="togglePassword"
+            >
+              SHOW
+            </button>
+          </div>
+
+          <div class="options">
+
+            <label class="remember">
+              <input type="checkbox" />
+              <span>Remember me</span>
+            </label>
+
+            <a href="#" class="forgot">
+              Forgot password?
+            </a>
+
+          </div>
+
+          <button class="submit" id="submitBtn" type="submit">
+            <span>Continue securely</span>
+          </button>
+
+        </form>
+
+        <div class="divider">or</div>
+
+        <button class="google">
+          Continue with Google
+        </button>
+
+        <div class="footer-text">
+          Don't have an account?
+          <a href="#">Request access</a>
+        </div>
+
+        <div class="security">
+          <span class="security-dot"></span>
+          Secure private connection
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const password = document.getElementById("password");
+    const toggle = document.getElementById("togglePassword");
+    const form = document.getElementById("loginForm");
+    const button = document.getElementById("submitBtn");
+
+    toggle.addEventListener("click", () => {
+      const showing = password.type === "text";
+
+      password.type = showing ? "password" : "text";
+      toggle.textContent = showing ? "SHOW" : "HIDE";
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      button.classList.add("loading");
+      button.disabled = true;
+
+      setTimeout(() => {
+        button.classList.remove("loading");
+        button.disabled = false;
+
+        alert("Demo login submitted.");
+      }, 1200);
+    });
+  </script>
+
+</body>
+  </html>
